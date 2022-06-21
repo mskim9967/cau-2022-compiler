@@ -11,7 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Reader {
-
+  /**
+   * read token file and return tokens
+   * @param fileName token file name
+   * @return list of token
+   * @throws IOException
+   */
   public static List<Token> file2TokenList(String fileName) throws IOException {
     BufferedReader reader = null;
     List<Token> tokenList = new ArrayList<>();

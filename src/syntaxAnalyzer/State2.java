@@ -3,12 +3,17 @@ package syntaxAnalyzer;
 import lexicalAnalyzer.State;
 
 /**
- * States defined in DFA transition table
+ * New states in state redefinition table
  */
 public enum State2 {
-  Vtype, Num, Character, Boolstr, Literal, Id, If, Else, While, Return, Class, Addsub, Multdiv, Assign, Comp, Semi, Comma, Lparen, Rparen, Lbrace, Rbrace, CCODE, CODE, VDECL, ASSIGN, RHS, EXPR, S1, S2, FDECL, ARG, MOREARGS, BLOCK, STMT, COND, S3, ELSE, RETURN, CDECL, ODECL, End, LAMBDA;
+  Vtype, Num, Character, Boolstr, Literal, Id, If, Else, While, Return, Class, Addsub, Multdiv, Assign, Comp, Semi, Comma, Lparen, Rparen, Lbrace, Rbrace, CCODE, CODE, VDECL, ASSIGN, RHS, EXPR, S1, S2, FDECL, ARG, MOREARGS, BLOCK, STMT, COND, S3, ELSE, RETURN, CDECL, ODECL, End;
 
 
+  /**
+   * convert project #1's state to project #2's state
+   * @param state project #1's state
+   * @return project #2's state
+   */
   public static State2 convert(State state) {
     if (state.equals(State.INT) || state.equals(State.CHAR) || state.equals(State.STRING) || state.equals(State.BOOLEAN))
       return Vtype;

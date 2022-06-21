@@ -23,6 +23,7 @@ public class Parser {
   }
 
   private class LR {
+    // s: shift  /  r: reduce  /  g: goto
     char action;
     int number;
 
@@ -507,14 +508,20 @@ public class Parser {
     LRTABLE[88][Return.ordinal()] = new LR('r', 34);
   }
 
-
+  /**
+   * check symbols's syntax is valid
+   * @param argSymbols symbols
+   * @return is valid
+   */
   public boolean isValid(List<Token2> argSymbols) {
+    // convert symbols from array list to linked list
     List<Token2> symbols = argSymbols.stream().map(Token2::clone).collect(Collectors.toCollection(LinkedList::new));
     symbols.add(new Token2(End));
+
     Stack<Integer> stack = new Stack<>() {{
       push(0);
     }};
-    int pos = 0;
+    int pos = 0; // splitter
 
     while (pos != symbols.size()) {
 
@@ -529,18 +536,22 @@ public class Parser {
       }
 
       if (lr == null) {
-        System.out.println("[ERROR] " + "invalid syntax in line " + symbols.get(pos).value.lineNum);
+        // cannot do reduce or shift, it is rejected
+        System.out.println("[LOG] " + "invalid syntax in line " + symbols.get(pos).value.lineNum);
         return false;
       }
 
       if (lr.action == 's') {
+        // shift
         System.out.println("Shift and Goto " + lr.number);
         stack.push(lr.number);
         pos++;
       }
       else if (lr.action == 'r') {
+        // reduce
         System.out.println("Reduce by " + lr.number + " (" + SLR.get(lr.number).left.toString() + "->" + SLR.get(lr.number).right.toString() + ")");
 
+        // pop cfg's length times
         System.out.print("Pop ");
         for (State2 state : SLR.get(lr.number).right) {
           symbols.remove(--pos);
@@ -548,18 +559,16 @@ public class Parser {
           stack.pop();
         }
         System.out.println();
+        // reduce left substring
         symbols.add(pos, new Token2(SLR.get(lr.number).left));
         pos++;
 
+        // if left substring is reduced to start symbol, it is acceptable
         if (symbols.get(pos - 1).key == CCODE) return true;
 
         lr = LRTABLE[stack.peek()][SLR.get(lr.number).left.ordinal()];
         stack.push(lr.number);
         System.out.println("Goto(Push) " + lr.number);
-      }
-      else if (lr.action == 'g') {
-        System.out.println("Goto " + lr.number);
-        stack.push(lr.number);
       }
 
       System.out.println("Stack: " + stack);

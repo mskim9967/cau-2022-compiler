@@ -18,10 +18,10 @@ import java.util.List;
 public class Main {
   /**
    * entry point
-   * read file from args[0], tokenize file and save file as txt and json fo   rmat
+   * read file from args[0], parsing tokenized file and determine acceptable
    *
-   * @param args args[0]: file name to tokenize
-   * @throws IOException input file execption handler
+   * @param args args[0]: tokenized file name
+   * @throws IOException tokenized file exception handler
    */
   public static void main(String[] args) throws IOException {
     String fileName;
@@ -29,18 +29,23 @@ public class Main {
     try {
       fileName = args[0];
     } catch (Exception e) {
+      // default file name
       fileName = "input.txt.output.txt";
     }
 
-    // read file and tokenize
+    // read tokenized file
     List<Token> tokenList = Reader.file2TokenList(fileName);
     List<Token2> symbols = new ArrayList<>();
+
+    // convert token format from project#1 to project#2
     tokenList.forEach(token -> {
       symbols.add(new Token2(State2.convert(State.valueOf(token.key)), token));
     });
 
-    Parser syntaxAnalyzer = new Parser();
-    boolean isValid = syntaxAnalyzer.isValid(symbols);
+    // determine acceptable
+    boolean isValid = new Parser().isValid(symbols);
     System.out.println("\n[LOG] " + fileName + (isValid ? " Accepted" : " Rejected"));
   }
 }
+
+

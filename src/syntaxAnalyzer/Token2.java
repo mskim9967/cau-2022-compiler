@@ -3,7 +3,7 @@ package syntaxAnalyzer;
 import lexicalAnalyzer.Token;
 
 /**
- * Define token2
+ * Define new tokens
  */
 public class Token2 implements Cloneable {
   public State2 key;
@@ -31,6 +31,4 @@ public class Token2 implements Cloneable {
     }
     return clone;
   }
-
 }
-

@@ -1,0 +1,24 @@
+
+class MyClass {
+
+    boolean isTrue(char _char_, string stringchar, int ___) {
+        stringchar = " 6o43 kddf 134@!?!?[]()>= >; 000 !!rfk ?e";
+        ___ = -591+4321/ 3* 31-10+-42194;
+        char thisis_char = '$';
+
+        while(true == false) {
+            boolean bbbb = false;
+        }
+
+        if(false != true) {
+            a = 300;
+        }
+
+        else {
+            char _ejcm = 'c';
+        }
+
+        return true;
+    }
+
+}
